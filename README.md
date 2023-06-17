@@ -16,7 +16,7 @@ audio-steganography
 
 ---
 ## Installation
-To use this library, download the latest [release](https://github.com/maxmmueller/startpage-maps/releases/latest) (source code zip) and unzip it
+To use this library, download the latest [release](https://github.com/maxmmueller/audio-steganography/releases/latest) (source code zip) and unzip it
 
 ---
 ## Usage 

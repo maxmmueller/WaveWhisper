@@ -1,2 +1,47 @@
-# audio-steganography
-Hide messages in the spectrogram of audio files
+<h1 align="center">
+audio-steganography
+</h1>
+
+<p align="center">
+<a href="https://github.com/maxmmueller/audio-steganography/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202-blue"/></a>
+</p>
+
+
+<p align="center">A Python library for encrypting a message within the spectrogram of an audio file using a steganographic method.</p>
+
+
+<p align="center">
+<img src="images/screenshot.jpg">
+</p>
+
+---
+## Installation
+To use this library, download the latest [release](https://github.com/maxmmueller/startpage-maps/releases/latest) (source code zip) and unzip it
+
+---
+## Usage 
+
+## `audio_steganography(text, audio_path, destination_path)`
+
+- Parameters:
+  - `text (str)`: the message to be encrypted
+  - `audio_path (str)`: a path to a .wav audio file
+  - `param destination_path (str)`: path where the generated .wav will be saved
+
+
+- Returns: None
+### Example:
+
+```python
+audio_steganography(text="SECRET", audio_path="song.wav", destination_path="encrypted.wav")
+```
+
+---
+## Contributing
+Contributions to this project are welcome!
+
+If you encounter any problems, find a bug or have feature requests, please open an [issue](https://github.com/maxmmueller/audio-steganography/issues/new).
+
+---
+## Licence
+Maximilian Müller 2023 [Apache License 2.0](LICENSE)

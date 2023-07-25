@@ -7,7 +7,7 @@ audio-steganography
 </p>
 
 
-<p align="center">A Python library for encrypting a message within the spectrogram of an audio file using a steganographic method.</p>
+<p align="center">A Python library for steganographic encryption of text within the spectrogram of an audio file.</p>
 
 
 <p align="center">
@@ -16,7 +16,9 @@ audio-steganography
 
 ---
 ## Installation
-To use this library, download the latest [release](https://github.com/maxmmueller/audio-steganography/releases/latest) (source code zip) and unzip it
+To use this library, download the latest [release](https://github.com/maxmmueller/audio-steganography/releases/latest) (source code zip) and unzip it.
+
+Then install the necessary python libraries `pydub` and `scipy`.
 
 ---
 ## Usage 
@@ -24,9 +26,9 @@ To use this library, download the latest [release](https://github.com/maxmmuelle
 ## `audio_steganography(text, audio_path, destination_path)`
 
 - Parameters:
-  - `text (str)`: the message to be encrypted
+  - `text (str)`: the text to be encrypted
   - `audio_path (str)`: a path to a .wav audio file
-  - `param destination_path (str)`: path where the generated .wav will be saved
+  - `param destination_path (str)`: path where the modified .wav will be saved
 
 
 - Returns: None

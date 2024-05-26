@@ -7,6 +7,8 @@ audio-steganography
 </p>
 
 
+<h2 align="center">!! Work in process - New version is currently undocumented !!</h2>
+
 <p align="center">A Python library for steganographic encryption of text within the spectrogram of an audio file.</p>
 
 

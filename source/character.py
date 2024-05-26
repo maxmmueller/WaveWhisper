@@ -1,35 +1,40 @@
-from picture_to_wav import convert_to_spectrogram
+from image_to_wav import convert_to_spectrogram
 
 class Character:
-    def __init__(self, active_segments):
-        self.width = 541
-        self.height = 1041
+    # x1, y1, x2, y2, height
+    segments = (
+        (1, 0, 28, 0, 6),
+        (24, 1, 29, 1, 29),  
+        (24, 30, 29, 30, 26),
+        (1, 54, 28, 54, 6),
+        (0, 30, 5, 30, 26),
+        (0, 1, 5, 1, 29),
 
-        # creates an empty image with white background
+        (1, 27, 14, 27, 6),
+        (15, 27, 28, 27, 6),
+
+        (6, 5, 15, 29, 6),
+        (12, 2, 17, 2, 28),
+        (14, 29, 23, 5, 6),
+
+        (2, 52, 11, 29, 6),
+        (12, 30, 17, 30, 29),
+        (18, 29, 27, 52, 6)
+    )
+
+    width = 30
+    height = 60
+
+
+    def __init__(self, active_segments, output_name):
         # switching to arrays will improve speed -----------------------------------------
-        # self.image = array('B', [0] * (self.width * self.height))
+        # self.image = array.array('B', [0] * (self.width * self.height))
+        # creates an empty image with white background
         self.image =  [[0 for _ in range(self.width)] for _ in range(self.height)]
 
-        # x1, y1, x2, y2, height
-        self.segments = {
-            'A': (50, 0, 490, 0, 40),
-            'B': (500, 50, 540, 50, 440),  
-            'C': (500, 550, 540, 550, 440),
-            'D': (50, 1000, 490, 1000, 40),
-            'E': (0, 550, 40, 550, 440),
-            'F': (0, 50, 40, 50, 440),
-            'G1': (50, 500, 240, 500, 40),
-            'G2': (300, 500, 490, 500, 40),
-            'H': (55, 55, 235, 380, 100),
-            'I': (250, 50, 290, 50, 440),
-            'J': (305, 380, 485, 55, 100),
-            'K': (55, 880, 235, 555, 100),
-            'L': (250, 550, 290, 550, 440),
-            'M': (305, 555, 485, 880, 100)
-        }
-
         self.active_segments = active_segments
-
+        self.output_path = f"out/{output_name}.wav"
+        
 
     def __draw_rectangle(self, dimensions):
         x1, y1, x2, y2, height = dimensions
@@ -62,14 +67,12 @@ class Character:
                     err += dx
                     current_y1 += sy
 
+    def render(self, audio_channels=2, duration=1, sample_rate=5000):
+        for i, segment in enumerate(self.segments):
+            if self.active_segments[i] == "0": continue
 
-    def render_character(self):
-        for segment in self.active_segments:
-            self.__draw_rectangle(self.segments.get(segment))
+            self.__draw_rectangle(segment)
 
-        duration = 1
-        resolution = 100
-        convert_to_spectrogram(self.image, duration, resolution,"1o.wav")
+        samples = convert_to_spectrogram(self.image, duration, self.height, self.output_path, sample_rate, audio_channels)
 
-myChar = Character(("F", "E", "A", "G1", "G2", "B", "H"))
-myChar.render_character()
+        return samples

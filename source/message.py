@@ -1,3 +1,5 @@
+import wave
+from audio import Audio
 from character import Character
 
 class Message:
@@ -32,14 +34,33 @@ class Message:
         "Z": "10010000001100"
     }
 
-    @classmethod
-    def render_message(cls, text, audio_channels, char_duration, char_sample_rate):
 
-        char_audio_samples = {}
+    def __init__(self, message_text):
+        self.message_text = message_text
 
-        for character in set(text):
-            wav_character = Character(cls.letters.get(character))
-            char_audio_samples[character] = wav_character.render(audio_channels, char_duration, char_sample_rate)
+
+    def __render_message(self, audio_channels, char_duration):
+        self.char_audio_samples = {}
+
+        for character in set(self.message_text):
+            wav_character = Character(self.letters.get(character), character)
+            self.char_audio_samples[character] = wav_character.render(audio_channels, char_duration)
             del wav_character
 
-        return char_audio_samples
+
+    def encrypt(self, carrier_audio_path, output_path, char_duration=1):
+        with wave.open(carrier_audio_path, 'rb') as f:
+            audio_channels = f.getparams().nchannels
+
+        self.__render_message(audio_channels, char_duration)
+
+        message_samples = []
+        for char in self.message_text:
+            message_samples.append(self.char_audio_samples[char])
+
+        message_audio = Audio(message_samples)
+        message_audio.overlay_wavs("song.wav", output_path)
+
+
+message = Message("MYNAMEISMAX")
+message.encrypt("song.wav", "out/encr.wav")

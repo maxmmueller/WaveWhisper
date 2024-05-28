@@ -1,7 +1,6 @@
 import array
 import math
 import struct
-# from image_to_wav import __convert_to_spectrogram
 
 
 class Character:
@@ -28,15 +27,17 @@ class Character:
 
     width = 30
     height = 60
+    sample_rate = 10000#44100
 
 
-    def __init__(self, active_segments):
+    def __init__(self, active_segments, output_name):
         # switching to arrays will improve speed -----------------------------------------
         # self.image = array.array('B', [0] * (self.width * self.height))
         # creates an empty image with white background
         self.image =  [[0 for _ in range(self.width)] for _ in range(self.height)]
 
         self.active_segments = active_segments
+        self.output_path = f"out/{output_name}.wav"
         
 
     def __draw_rectangle(self, dimensions):
@@ -71,16 +72,16 @@ class Character:
                     current_y1 += sy
 
 
-    def __convert_to_spectrogram(self, duration, sample_rate = 44100, audio_channels=2, volume=1):
+    def __convert_to_spectrogram(self, duration, audio_channels=2, volume=1):
 
         # ensures the the Nyquist frequency isn't exeeded
-        upper_frequency_boundary = sample_rate / 2 - sample_rate / 50
-        lower_frequency_boundary = sample_rate / 4
+        upper_frequency_boundary = self.sample_rate / 2 - self.sample_rate / 50
+        lower_frequency_boundary = self.sample_rate / 4
         
-        amount_of_samples = int(sample_rate * duration)
+        amount_of_samples = int(self.sample_rate * duration)
 
         raw_audio_data = array.array('f')
-        normalized_audio_data = array.array('i') #h
+        normalized_audio_data = array.array('h')
 
         # resizes the image to fit the spectrogram
         self.__adjust_image_width(amount_of_samples)
@@ -90,7 +91,7 @@ class Character:
             time_frame_value = 0.0
             for y in range(self.height):
                 frequency = lower_frequency_boundary + ((self.height - y) * (upper_frequency_boundary - lower_frequency_boundary) / self.height)
-                time_frame_value += self.image[y][x] * math.sin(2 * math.pi * frequency * x / sample_rate)
+                time_frame_value += self.image[y][x] * math.sin(2 * math.pi * frequency * x / self.sample_rate)
             raw_audio_data.append(time_frame_value)
 
         peak_frequency = max(raw_audio_data, key=abs)
@@ -102,15 +103,11 @@ class Character:
             if audio_channels == 2:
                 normalized_audio_data.append(data)
 
-        # with wave.open(output_path, 'w') as file:
-        #     file.setparams((audio_channels, 2, sample_rate, amount_of_samples, "NONE", "Uncompressed"))
-        #     file.writeframes(normalized_audio_data.tobytes())
-            
         frames = normalized_audio_data.tobytes()
         samples = struct.unpack_from('<' + 'h' * amount_of_samples * audio_channels, frames)
 
         return samples
-    
+
 
     def __adjust_image_width(self, new_width):
         original_height = len(self.image)
@@ -121,23 +118,16 @@ class Character:
             for x in range(new_width):
                 original_x = int(x * original_width / new_width)
                 resized_image[y][x] = self.image[y][original_x]
-
+        
         self.image = resized_image
 
 
-    def render(self, audio_channels=2, duration=1, sample_rate=5000):
+    def render(self, audio_channels, duration):
         for i, segment in enumerate(self.segments):
             if self.active_segments[i] == "0": continue
 
-            # TODO
-            # resizing can be done directly when drawing the character by multiplying  
-            # amount_of_samples = int(sample_rate * duration) 
-            # with the x-coordinate of the rect corner
-            # the img array then needs to be initialized with the amount_of_samples as its width directly
-
             self.__draw_rectangle(segment)
 
-        samples = self.__convert_to_spectrogram(duration, sample_rate, audio_channels)
+        samples = self.__convert_to_spectrogram(duration, audio_channels)
 
         return samples
-    

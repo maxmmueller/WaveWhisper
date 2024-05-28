@@ -1,9 +1,8 @@
 import array
 import math
-import wave
 import struct
 
-def convert_to_spectrogram(image_array, duration, resolution, output_path, sample_rate = 44100, audio_channels=2, volume=1):
+def __convert_to_spectrogram(image_array, duration, resolution, output_path, sample_rate = 44100, audio_channels=2, volume=1):
 
     # ensures the the Nyquist frequency isn't exeeded
     upper_frequency_boundary = sample_rate / 2 - sample_rate / 50
@@ -12,7 +11,7 @@ def convert_to_spectrogram(image_array, duration, resolution, output_path, sampl
     amount_of_samples = int(sample_rate * duration)
 
     raw_audio_data = array.array('f')
-    normalized_audio_data = array.array('h')
+    normalized_audio_data = array.array('i') #h
 
     # resizes the image to fit the spectrogram
     image_array = adjust_image_width(image_array, amount_of_samples)

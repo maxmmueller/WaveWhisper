@@ -38,7 +38,7 @@ class Message:
         char_audio_samples = {}
 
         for character in set(text):
-            wav_character = Character(cls.letters.get(character), character)
+            wav_character = Character(cls.letters.get(character))
             char_audio_samples[character] = wav_character.render(audio_channels, char_duration, char_sample_rate)
             del wav_character
 

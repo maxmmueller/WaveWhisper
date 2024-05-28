@@ -16,6 +16,8 @@ audio-steganography
 <img src="images/screenshot.jpg">
 </p>
 
+This project was originally created for the German competition ["Explore Science Mannheim 2022"](https://www.explore-science.info/downloads/esma2022datensicherheit.pdf) in the category "data security" and has now been turned into an open source library.
+
 ---
 ## Installation
 To use this library, download the latest [release](https://github.com/maxmmueller/audio-steganography/releases/latest) (source code zip) and unzip it.

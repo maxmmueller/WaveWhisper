@@ -9,6 +9,8 @@ audio-steganography
 
 <h2 align="center">!! Work in process - New version is currently undocumented !!</h2>
 
+==> To get a stable version download [v0.1 of the library](https://github.com/maxmmueller/audio-steganography/releases/tag/v0.1).
+
 <p align="center">A Python library for steganographic encryption of text within the spectrogram of an audio file.</p>
 
 
@@ -50,4 +52,4 @@ If you encounter any problems, find a bug or have feature requests, please open 
 
 ---
 ## Licence
-Maximilian Müller 2023 [Apache License 2.0](LICENSE)
+Maximilian Müller [Apache License 2.0](LICENSE)

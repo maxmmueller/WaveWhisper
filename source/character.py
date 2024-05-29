@@ -4,46 +4,40 @@ import struct
 
 
 class Character:
-    # x1, y1, x2, y2, height
+    # x1, y1, x2, y2, height of each segment of a virtual 14-segment display
     segments = (
-        (1, 0, 28, 0, 6),
-        (24, 1, 29, 1, 29),  
-        (24, 30, 29, 30, 26),
-        (1, 54, 28, 54, 6),
-        (0, 30, 5, 30, 26),
-        (0, 1, 5, 1, 29),
-
-        (1, 27, 14, 27, 6),
-        (15, 27, 28, 27, 6),
-
-        (6, 5, 15, 29, 6),
-        (12, 2, 17, 2, 28),
-        (14, 29, 23, 5, 6),
-
-        (2, 52, 11, 29, 6),
-        (12, 30, 17, 30, 29),
-        (18, 29, 27, 52, 6)
+        (1, 0, 28, 0, 6),      # a
+        (24, 1, 29, 1, 29),    # b
+        (24, 30, 29, 30, 26),  # c
+        (1, 54, 28, 54, 6),    # d
+        (0, 30, 5, 30, 26),    # e
+        (0, 1, 5, 1, 29),      # f
+        (1, 27, 14, 27, 6),    # g1
+        (15, 27, 28, 27, 6),   # g2
+        (6, 5, 15, 29, 6),     # h
+        (12, 2, 17, 2, 28),    # i
+        (14, 29, 23, 5, 6),    # j
+        (2, 52, 11, 29, 6),    # k
+        (12, 30, 17, 30, 29),  # l
+        (18, 29, 27, 52, 6)    # m
     )
 
     width = 30
     height = 60
-    sample_rate = 10000#44100
+    sample_rate = 10000 #44100
 
 
-    def __init__(self, active_segments, output_name):
-        # switching to arrays will improve speed -----------------------------------------
-        # self.image = array.array('B', [0] * (self.width * self.height))
-        # creates an empty image with white background
+    def __init__(self, active_segments):
+        # initializes an all white image
         self.image =  [[0 for _ in range(self.width)] for _ in range(self.height)]
-
         self.active_segments = active_segments
-        self.output_path = f"out/{output_name}.wav"
         
 
     def __draw_rectangle(self, dimensions):
+        """Draws the segments of a virtual 14-segment display"""
         x1, y1, x2, y2, height = dimensions
 
-        # uses bresenham's algorithm to draw the individual rows of a rectangle
+        # uses Bresenham's algorithm to draw the individual rows of a rectangle
         for i in range(height):
             current_x1 = x1
             current_y1 = y1 + i
@@ -57,7 +51,6 @@ class Character:
             err = dx - dy
 
             while True:
-                # index = current_y1 * self.width + current_x1
                 self.image[current_y1][current_x1] = 100
 
                 if current_x1 == current_x2 and current_y1 == current_y2:
@@ -73,7 +66,6 @@ class Character:
 
 
     def __convert_to_spectrogram(self, duration, audio_channels=2, volume=1):
-
         # ensures the the Nyquist frequency isn't exeeded
         upper_frequency_boundary = self.sample_rate / 2 - self.sample_rate / 50
         lower_frequency_boundary = self.sample_rate / 4
@@ -122,12 +114,14 @@ class Character:
         self.image = resized_image
 
 
-    def render(self, audio_channels, duration):
+    def render_char(self, audio_channels, duration):
+        # draws the character on a virtual 14-segment display
         for i, segment in enumerate(self.segments):
             if self.active_segments[i] == "0": continue
 
             self.__draw_rectangle(segment)
 
+        # converts the character-image to audio data
         samples = self.__convert_to_spectrogram(duration, audio_channels)
 
         return samples

@@ -4,7 +4,7 @@ from character import Character
 
 class Message:
 
-    # maps each letter to its active segments
+    # maps each letter to its active segments of a virtual 14-segment display
     letters = {
         "A": "11101111000000",
         "B": "11110001010010",
@@ -34,7 +34,6 @@ class Message:
         "Z": "10010000001100"
     }
 
-
     def __init__(self, message_text):
         self.message_text = message_text
 
@@ -43,8 +42,8 @@ class Message:
         self.char_audio_samples = {}
 
         for character in set(self.message_text):
-            wav_character = Character(self.letters.get(character), character)
-            self.char_audio_samples[character] = wav_character.render(audio_channels, char_duration)
+            wav_character = Character(self.letters.get(character))
+            self.char_audio_samples[character] = wav_character.render_char(audio_channels, char_duration)
             del wav_character
 
 
@@ -60,7 +59,3 @@ class Message:
 
         message_audio = Audio(message_samples)
         message_audio.overlay_wavs("song.wav", output_path)
-
-
-message = Message("MYNAMEISMAX")
-message.encrypt("song.wav", "out/encr.wav")

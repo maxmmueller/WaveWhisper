@@ -38,24 +38,27 @@ class Message:
         self.message_text = message_text
 
 
-    def __render_message(self, audio_channels, char_duration):
+    def __render_message(self, audio_channels, samples_per_char, carrier_rate):
         self.char_audio_samples = {}
 
         for character in set(self.message_text):
             wav_character = Character(self.letters.get(character))
-            self.char_audio_samples[character] = wav_character.render_char(audio_channels, char_duration)
+            self.char_audio_samples[character] = wav_character.render_char(audio_channels, samples_per_char, carrier_rate)
             del wav_character
 
 
-    def encrypt(self, carrier_audio_path, output_path, char_duration=1):
+    def encrypt(self, carrier_audio_path, output_path):
         with wave.open(carrier_audio_path, 'rb') as f:
             audio_channels = f.getparams().nchannels
+            carrier_rate = f.getparams().framerate
+            samples_per_char = min(int(f.getparams().nframes / len(self.message_text)), 10000)
+            print(samples_per_char)
 
-        self.__render_message(audio_channels, char_duration)
+        self.__render_message(audio_channels, samples_per_char, carrier_rate)
 
         message_samples = []
         for char in self.message_text:
             message_samples.append(self.char_audio_samples[char])
 
         message_audio = Audio(message_samples)
-        message_audio.overlay_wavs("song.wav", output_path)
+        message_audio.overlay_wavs(carrier_audio_path, output_path)

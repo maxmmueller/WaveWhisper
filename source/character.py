@@ -24,7 +24,6 @@ class Character:
 
     width = 30
     height = 60
-    sample_rate = 10000 #44100
 
 
     def __init__(self, active_segments):
@@ -65,25 +64,23 @@ class Character:
                     current_y1 += sy
 
 
-    def __convert_to_spectrogram(self, duration, audio_channels=2, volume=1):
+    def __convert_to_spectrogram(self, audio_channels=2, volume=0.4):
         # ensures the the Nyquist frequency isn't exeeded
-        upper_frequency_boundary = self.sample_rate / 2 - self.sample_rate / 50
-        lower_frequency_boundary = self.sample_rate / 4
+        upper_frequency_boundary = self.carrier_rate / 2 - self.carrier_rate / 50
+        lower_frequency_boundary = self.carrier_rate / 4
         
-        amount_of_samples = int(self.sample_rate * duration)
-
         raw_audio_data = array.array('f')
         normalized_audio_data = array.array('h')
 
         # resizes the image to fit the spectrogram
-        self.__adjust_image_width(amount_of_samples)
+        self.__adjust_image_width(self.samples_per_char)
 
         # converts the color data of the image to audio data
-        for x in range(amount_of_samples):
+        for x in range(self.samples_per_char):
             time_frame_value = 0.0
             for y in range(self.height):
                 frequency = lower_frequency_boundary + ((self.height - y) * (upper_frequency_boundary - lower_frequency_boundary) / self.height)
-                time_frame_value += self.image[y][x] * math.sin(2 * math.pi * frequency * x / self.sample_rate)
+                time_frame_value += self.image[y][x] * math.sin(2 * math.pi * frequency * x / self.carrier_rate)
             raw_audio_data.append(time_frame_value)
 
         peak_frequency = max(raw_audio_data, key=abs)
@@ -96,7 +93,7 @@ class Character:
                 normalized_audio_data.append(data)
 
         frames = normalized_audio_data.tobytes()
-        samples = struct.unpack_from('<' + 'h' * amount_of_samples * audio_channels, frames)
+        samples = struct.unpack_from('<' + 'h' * self.samples_per_char * audio_channels, frames)
 
         return samples
 
@@ -114,7 +111,9 @@ class Character:
         self.image = resized_image
 
 
-    def render_char(self, audio_channels, duration):
+    def render_char(self, audio_channels, samples_per_char, carrier_rate):
+        self.samples_per_char = samples_per_char
+        self.carrier_rate = carrier_rate
         # draws the character on a virtual 14-segment display
         for i, segment in enumerate(self.segments):
             if self.active_segments[i] == "0": continue
@@ -122,6 +121,6 @@ class Character:
             self.__draw_rectangle(segment)
 
         # converts the character-image to audio data
-        samples = self.__convert_to_spectrogram(duration, audio_channels)
+        samples = self.__convert_to_spectrogram(audio_channels)
 
         return samples

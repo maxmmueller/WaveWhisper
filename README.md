@@ -10,12 +10,12 @@ WaveWhisper
 
 
 <p align="center">
-<img src="images/screenshot.jpg">
+<img src="images/screenshot.png">
 </p>
 
 
 ## Note
-This project was originally created for the German competition [*Explore Science Mannheim 2022*](https://www.explore-science.info/downloads/esma2022datensicherheit.pdf) in the category *data security* where it was ranked 2nd. I then made some small changes to turn it into an open source library.
+This project was originally created for the German competition [*Explore Science Mannheim 2022*](https://www.explore-science.info/downloads/esma2022datensicherheit.pdf) in the category *data security* where it was ranked 2nd. I then made some small changes to turn it into this open source library.
 
 
 ## Installation

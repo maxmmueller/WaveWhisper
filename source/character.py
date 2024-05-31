@@ -22,13 +22,12 @@ class Character:
         (18, 29, 27, 52, 6)    # m
     )
 
-    width = 30
+    original_width = 30
     height = 60
 
 
     def __init__(self, active_segments, samples_per_char):
         # initializes an all white image
-        # self.image =  [[0 for _ in range(self.width)] for _ in range(self.height)]
         self.image =  [[0 for _ in range(samples_per_char)] for _ in range(self.height)]
         self.active_segments = active_segments
         self.samples_per_char = samples_per_char
@@ -38,8 +37,8 @@ class Character:
         """Draws the segments of a virtual 14-segment display"""
         x1, y1, x2, y2, height = dimensions
 
-        x1 = int(x1 / (self.width-1) * (self.samples_per_char-1))
-        x2 = int(x2 / (self.width-1) * (self.samples_per_char-1))
+        x1 = int(x1 / (self.original_width-1) * (self.samples_per_char-1))
+        x2 = int(x2 / (self.original_width-1) * (self.samples_per_char-1))
 
         # uses Bresenham's algorithm to draw the individual rows of a rectangle
         for i in range(height):
@@ -70,15 +69,12 @@ class Character:
 
 
     def __convert_to_spectrogram(self, audio_channels=2, volume=0.1):
-        # ensures the the Nyquist frequency isn't exeeded
+        # ensures the Nyquist frequency isn't exeeded
         upper_frequency_boundary = self.carrier_rate / 2 - self.carrier_rate / 50
         lower_frequency_boundary = self.carrier_rate / 4
         
         raw_audio_data = array.array('f')
         normalized_audio_data = array.array('h')
-
-        # resizes the image to fit the spectrogram
-        # self.__adjust_image_width(self.samples_per_char)
 
         # converts the color data of the image to audio data
         for x in range(self.samples_per_char):
@@ -103,21 +99,7 @@ class Character:
         return samples
 
 
-    def __adjust_image_width(self, new_width):
-        original_height = len(self.image)
-        original_width = len(self.image[0])
-        resized_image = [[0 for _ in range(new_width)] for _ in range(original_height)]
-        
-        for y in range(original_height):
-            for x in range(new_width):
-                original_x = int(x * original_width / new_width)
-                resized_image[y][x] = self.image[y][original_x]
-        
-        self.image = resized_image
-
-
     def render_char(self, audio_channels, carrier_rate):
-        # self.samples_per_char = samples_per_char
         self.carrier_rate = carrier_rate
         # draws the character on a virtual 14-segment display
         for i, segment in enumerate(self.segments):

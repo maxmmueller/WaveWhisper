@@ -56,10 +56,6 @@ class Message:
         if samples_per_char < 2500:
             print("WARNING: Short carrier length combined with long messages may lead to poor readability")
 
-        # samples_per_char becomes the image's width later on
-        # TODO -> initialize the image array to with samples_per_char as its width directly 
-        # so no resizing in needed
-
 
         self.__render_message(audio_channels, samples_per_char, carrier_rate)
 

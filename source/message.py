@@ -40,8 +40,10 @@ class Message:
 
     def __render_message(self, audio_channels, samples_per_char, carrier_rate):
         self.char_audio_samples = {}
+        self.char_audio_samples[" "] = [0] * samples_per_char * audio_channels # space character
 
         for character in set(self.message_text):
+            if character == " ": continue
             wav_character = Character(self.letters.get(character), samples_per_char)
             self.char_audio_samples[character] = wav_character.render_char(audio_channels, carrier_rate)
             del wav_character
@@ -55,7 +57,6 @@ class Message:
 
         if samples_per_char < 2500:
             print("WARNING: Short carrier length combined with long messages may lead to poor readability")
-
 
         self.__render_message(audio_channels, samples_per_char, carrier_rate)
 

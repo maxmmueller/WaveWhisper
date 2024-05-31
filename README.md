@@ -19,7 +19,7 @@ This project was originally created for the German competition [*Explore Science
 
 
 ## Installation
-To use this library, download the latest [release](https://github.com/maxmmueller/audio-steganography/releases/latest) (source code zip).
+To use this library, download the latest [release](https://github.com/maxmmueller/wavewhisper/releases/latest) (source code zip).
 
 In my attempt to make this library as lightweight as possible, it can currently operate without any external dependencies.
 
@@ -38,7 +38,7 @@ message.encrypt("song.wav", "encrypted.wav") # carrier path and output path
 ## Contributing
 Contributions to this project are welcome!
 
-If you encounter any problems, find a bug or have feature requests, please open an [issue](https://github.com/maxmmueller/audio-steganography/issues/new).
+If you encounter any problems, find a bug or have feature requests, please open an [issue](https://github.com/maxmmueller/wavewhisper/issues/new).
 
 
 ## Support

@@ -35,15 +35,15 @@ class Message:
     }
 
     def __init__(self, message_text):
-        self.message_text = message_text
+        self.message_text = message_text.upper()
 
 
     def __render_message(self, audio_channels, samples_per_char, carrier_rate):
         self.char_audio_samples = {}
 
         for character in set(self.message_text):
-            wav_character = Character(self.letters.get(character))
-            self.char_audio_samples[character] = wav_character.render_char(audio_channels, samples_per_char, carrier_rate)
+            wav_character = Character(self.letters.get(character), samples_per_char)
+            self.char_audio_samples[character] = wav_character.render_char(audio_channels, carrier_rate)
             del wav_character
 
 
@@ -52,7 +52,14 @@ class Message:
             audio_channels = f.getparams().nchannels
             carrier_rate = f.getparams().framerate
             samples_per_char = min(int(f.getparams().nframes / len(self.message_text)), 10000)
-            print(samples_per_char)
+
+        if samples_per_char < 2500:
+            print("WARNING: Short carrier length combined with long messages may lead to poor readability")
+
+        # samples_per_char becomes the image's width later on
+        # TODO -> initialize the image array to with samples_per_char as its width directly 
+        # so no resizing in needed
+
 
         self.__render_message(audio_channels, samples_per_char, carrier_rate)
 

@@ -22,7 +22,7 @@ class Character:
         (18, 29, 27, 52, 6)    # m
     )
 
-    original_width = 30
+    original_width = 35
     height = 60
 
 
@@ -68,7 +68,7 @@ class Character:
                     current_y1 += sy
 
 
-    def __convert_to_spectrogram(self, audio_channels=2, volume=0.1):
+    def __convert_to_spectrogram(self, audio_channels=2, volume=0.4):
         # ensures the Nyquist frequency isn't exeeded
         upper_frequency_boundary = self.carrier_rate / 2 - self.carrier_rate / 50
         lower_frequency_boundary = self.carrier_rate / 4

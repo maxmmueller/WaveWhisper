@@ -1,2 +1,5 @@
 .vscode/
 source/__pycache__/
+wavs/
+WaveWhisper.egg-info/
+main.py

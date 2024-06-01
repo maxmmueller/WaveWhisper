@@ -17,11 +17,14 @@ WaveWhisper
 ## Note
 This project was originally created for the German competition [*Explore Science Mannheim 2022*](https://www.explore-science.info/downloads/esma2022datensicherheit.pdf) in the category *data security* where it was ranked 2nd. I then made some small changes to turn it into this open source library.
 
+In my attempt to make this library as lightweight as possible, it can currently operate without any external dependencies.
+
 
 ## Installation
-To use this library, download the latest [release](https://github.com/maxmmueller/wavewhisper/releases/latest).
-
-In my attempt to make this library as lightweight as possible, it can currently operate without any external dependencies.
+To use this library, install the latest release from PyPi:
+```
+pip install wavewhisper
+```
 
 ## Code example:
 

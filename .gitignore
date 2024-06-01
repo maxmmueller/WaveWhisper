@@ -1,5 +1,8 @@
 .vscode/
-source/__pycache__/
+wavewhisper/__pycache__/
 wavs/
 WaveWhisper.egg-info/
 main.py
+build/
+dist/
+pypi_commands.txt

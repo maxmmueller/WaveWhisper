@@ -44,6 +44,5 @@ If you encounter any problems, find a bug or have feature requests, please open 
 ## Support
 If you find this project helpful, consider supporting its development by making a donation:
 
-<a href="https://www.buymeacoffee.com/maxmmueller" target="_blank">
-  <img src="https://www.buymeacoffee.com/assets/img/custom_images/yellow_img.png" alt="Buy Me A Coffee">
-</a>
+<a href="https://www.buymeacoffee.com/maxmmueller" target="_blank"><img src="https://raw.githubusercontent.com/maxmmueller/WaveWhisper/main/images/coffee.png" alt="Buy Me A Coffee"></a>
+

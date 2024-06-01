@@ -1,6 +1,6 @@
 import wave
-from audio import Audio
-from character import Character
+from wavewhisper.audio import Audio
+from wavewhisper.character import Character
 
 class Message:
 

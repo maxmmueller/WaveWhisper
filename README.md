@@ -3,14 +3,14 @@ WaveWhisper
 </h1>
 
 <p align="center">
-<a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache%202-blue"/></a>
+<a href="https://github.com/maxmmueller/WaveWhisper/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202-blue"/></a>
 </p>
 
 <p align="center" style="font-size: 18px;">WaveWhisper is a lightweight Python library for steganographic encryption of text within the spectrogram of an audio file.</p>
 
 
 <p align="center">
-<img src="images/screenshot.png">
+<img src="https://raw.githubusercontent.com/maxmmueller/WaveWhisper/main/images/screenshot.png">
 </p>
 
 
@@ -19,14 +19,14 @@ This project was originally created for the German competition [*Explore Science
 
 
 ## Installation
-To use this library, download the latest [release](https://github.com/maxmmueller/wavewhisper/releases/latest) (source code zip).
+To use this library, download the latest [release](https://github.com/maxmmueller/wavewhisper/releases/latest).
 
 In my attempt to make this library as lightweight as possible, it can currently operate without any external dependencies.
 
 ## Code example:
 
 ```python
-from message import Message
+from wavewhisper import Message
 
 message = Message("My secret text")
 message.encrypt("song.wav", "encrypted.wav") # carrier path and output path
@@ -42,7 +42,7 @@ If you encounter any problems, find a bug or have feature requests, please open 
 
 
 ## Support
-If you find this project helpful, consider supporting its development by buying me a coffee!
+If you find this project helpful, consider supporting its development by making a donation:
 
 <a href="https://www.buymeacoffee.com/maxmmueller" target="_blank">
   <img src="https://www.buymeacoffee.com/assets/img/custom_images/yellow_img.png" alt="Buy Me A Coffee">

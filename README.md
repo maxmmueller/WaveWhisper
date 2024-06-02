@@ -27,16 +27,19 @@ To use this library, install the latest release from PyPi:
 pip install wavewhisper
 ```
 
-## Code example:
-
+## Usage
+#### Code example:
 ```python
 from wavewhisper import Message
 
+# Create a Message object with the desired text
 message = Message("My secret text")
-message.encrypt("song.wav", "encrypted.wav") # carrier path and output path
+
+# Encrypt the message into an audio file by specifying the carrier path and output path
+message.encrypt("song.wav", "encrypted.wav")
 ```
 
-!! FUll DOCS COMING SOON !!
+See the [documentation](https://github.com/maxmmueller/WaveWhisper/blob/main/docs.md) for more detailed usage instructions.
 
 
 ## Contributing

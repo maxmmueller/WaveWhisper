@@ -2,8 +2,8 @@ from setuptools import setup
 
 setup(
     name='WaveWhisper',
-    version='1.0.1',
-    description='Steganographic encryption of text within the spectrogram of an audio file',
+    version='1.0.2',
+    description='Steganographic encryption within audio spectrograms',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
     url='https://github.com/maxmmueller/wavewhisper',

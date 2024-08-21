@@ -3,11 +3,11 @@ WaveWhisper
 </h1>
 
 <p align="center">
-<a href="https://pypi.org/project/WaveWhisper/"><img src="https://img.shields.io/pypi/dw/wavewhisper?label=PyPi downloads"/></a>
+<a href="https://pypi.org/project/WaveWhisper/"><img src="https://img.shields.io/pypi/dm/wavewhisper?label=PyPi downloads"/></a>
 <a href="https://github.com/maxmmueller/WaveWhisper/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202-blue"/></a>
 </p>
 
-<p align="center" style="font-size: 18px;">WaveWhisper is a lightweight Python library for steganographic encryption of text within the spectrogram of an audio file.</p>
+<p align="center" style="font-size: 18px;">WaveWhisper is a lightweight Python library for steganographic encryption of text within the spectrogram of audio files.</p>
 
 
 <p align="center">
@@ -22,12 +22,14 @@ In my attempt to make this library as lightweight as possible, it can currently 
 
 
 ## Installation
-To use this library, install the latest release from PyPi:
+To access this library in Python, install the latest release from PyPi:
 ```
 pip install wavewhisper
 ```
 
 ## Usage
+Only capital letters of the english alphabet and spaces are supported.
+
 #### Code example:
 ```python
 from wavewhisper import Message

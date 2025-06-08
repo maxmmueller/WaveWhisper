@@ -3,7 +3,9 @@ WaveWhisper
 </h1>
 
 <p align="center">
-<a href="https://pypi.org/project/WaveWhisper/"><img src="https://img.shields.io/pypi/dm/wavewhisper?label=PyPi downloads"/></a>
+<a href="https://pypi.org/project/WaveWhisper/"><img src="https://img.shields.io/pypi/dm/wavewhisper?label=PyPi%20downloads"/></a>
+
+  
 <a href="https://github.com/maxmmueller/WaveWhisper/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202-blue"/></a>
 </p>
 
